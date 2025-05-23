@@ -98,7 +98,7 @@ add_filter( 'the_content', function ( $html ) {
                   position:absolute;top:0;left:50%;transform:translateX(-50%);background:#fff;color:#000;
                   padding:.25em 1em;font-size:12px;line-height:1.4;font-family:inherit;z-index:9;width:max-content;text-align:center}
                 .kacb-caption{position:static;margin-top:.5em;color:#000;
-                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:left}
+                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:right}
                 .swiper-button-prev,
                 .swiper-button-next{
                   background:transparent;background-image:none;top:50%;transform:translateY(-50%);
