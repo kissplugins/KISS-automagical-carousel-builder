@@ -3,7 +3,7 @@
  * Plugin Name:  KISS Automagical Carousel Builder
  * Description:  Detects runs of 3–4 consecutive images at render‑time and
  *               replaces them with a Swiper carousel — entirely page‑cache‑safe.
- * Version:      1.1.7            ; NOTE FOR LLM MAINTAINERS — bump semver only
+ * Version:      1.1.8            ; NOTE FOR LLM MAINTAINERS — bump semver only
  * Author:       Your Name
  * License:      GPL‑2.0‑or‑later
  *
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ---------------------------------------------------------------------- *
  * 1. CONSTANTS
  * ---------------------------------------------------------------------- */
-const KACB_VER = '1.1.6';
+const KACB_VER = '1.1.8';
 define( 'KACB_URL',  plugin_dir_url( __FILE__ ) );
 define( 'KACB_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -87,19 +87,21 @@ add_filter( 'the_content', function ( $html ) {
 	wp_enqueue_style ( 'kacb-inline' );
 
         wp_add_inline_style( 'kacb-inline', <<<CSS
-                .kacb-carousel{position:relative}.kacb-slide{position:relative}
+                .kacb-carousel{position:relative}
+                .kacb-slide{position:relative;display:flex;flex-direction:column;align-items:center}
+                .kacb-slide img{display:block;margin:0 auto}
                 .kacb-indicator{display:none;
                   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
                   width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;
-                  align-items:center;justify-content:center;font:600 14px/1 sans-serif;z-index:10}
+                  align-items:center;justify-content:center;font-weight:600;font-size:14px;line-height:1;font-family:inherit;z-index:10}
                 .kacb-filename{display:none;           /* ← hidden by default */
                   position:absolute;top:0;left:50%;transform:translateX(-50%);background:#fff;color:#000;
-                  padding:.25em 1em;font:12px/1.4 sans-serif;z-index:9;width:max-content;text-align:center}
-                .kacb-caption{position:absolute;bottom:0;left:50%;transform:translateX(-50%);background:#fff;color:#000;
-                  padding:.5em 1em;min-height:3em;font:14px/1.4 sans-serif;display:flex;align-items:center;z-index:9;width:max-content;text-align:center}
+                  padding:.25em 1em;font-size:12px;line-height:1.4;font-family:inherit;z-index:9;width:max-content;text-align:center}
+                .kacb-caption{position:static;margin-top:.5em;color:#000;
+                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:left}
                 .swiper-button-prev,
                 .swiper-button-next{
-                  background:#fff;background-image:none;top:50%;transform:translateY(-50%);
+                  background:transparent;background-image:none;top:50%;transform:translateY(-50%);
                 }
         CSS);
 
