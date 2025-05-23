@@ -64,6 +64,7 @@ Remove the shortcode when finished.
 
 | Version | Notes |
 |---------|-------|
+| **1.1.7** | Closing `</html>` is now removed from the returned string. |
 | **1.1.6** | *Captions* now fall back to `post_excerpt` or attachment **title**; overlay is omitted when caption empty.<br>*Filename* & *center badge* are hidden by default and auto‑re‑enabled only in `debug="true"` mode.<br>Debug panel accuracy improved by deferring its render to `wp_footer`. |
 | **1.1.5** | Added debug‑mode badge toggle, caption fallback to `post_excerpt`, badge hidden outside debug. |
 | **1.1.4** | Inserted mandatory `.swiper-wrapper` element (proper slide layout). |
