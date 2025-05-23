@@ -4,7 +4,7 @@ Detects runs of **3–4 adjacent images** in post content and converts them, at
 render‑time, into a Swiper carousel—fully compatible with page‑caching plugins.
 
 * **Plugin slug:** `kiss‑automagical‑carousel‑builder`
-* **Current version:** 1.1.6  
+* **Current version:** 1.1.7
 * **License:** GPL v2 or later
 
 ---
