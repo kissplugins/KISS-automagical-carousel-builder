@@ -89,16 +89,16 @@ add_filter( 'the_content', function ( $html ) {
         wp_add_inline_style( 'kacb-inline', <<<CSS
                 .kacb-carousel{position:relative}
                 .kacb-slide{position:relative;display:flex;flex-direction:column;align-items:center}
-                .kacb-slide img{display:block;margin:0 auto}
+                .kacb-slide img{display:block;margin:0 auto;width:100%;}
                 .kacb-indicator{display:none;
                   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
                   width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;
                   align-items:center;justify-content:center;font-weight:600;font-size:14px;line-height:1;font-family:inherit;z-index:10}
                 .kacb-filename{display:none;           /* ← hidden by default */
                   position:absolute;top:0;left:50%;transform:translateX(-50%);background:#fff;color:#000;
-                  padding:.25em 1em;font-size:12px;line-height:1.4;font-family:inherit;z-index:9;width:max-content;text-align:center}
+                  padding:.25em 1em;font-size:12px;line-height:1.4;font-family:inherit;z-index:9;width:max-content;text-align:center;}
                 .kacb-caption{position:static;margin-top:.5em;color:#000;
-                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:right}
+                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:right;padding-right:3%;}
                 .swiper-button-prev,
                 .swiper-button-next{
                   background:transparent;background-image:none;top:50%;transform:translateY(-50%);
