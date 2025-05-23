@@ -40,7 +40,7 @@ add_action( 'wp_enqueue_scripts', function () {
  * ---------------------------------------------------------------------- */
 add_filter( 'the_content', function ( $html ) {
 
-	if ( is_admin() && ! wp_doing_ajax() ) return $html;   // safe‑guard
+	if ( is_admin() && ! wp_doing_ajax() ) return $html;   // safeguard
 
 	$GLOBALS['kacb_filter_ran'] = true;                    // for debug panel
 
