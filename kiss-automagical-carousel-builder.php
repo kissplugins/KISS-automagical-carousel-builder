@@ -2,18 +2,18 @@
 /**
  * Plugin Name:  KISS Automagical Carousel Builder
  * Description:  Detects runs of 3–4 consecutive images at render‑time and
- *               replaces them with a Swiper carousel — entirely page‑cache‑safe.
- * Version:      1.1.8            ; NOTE FOR LLM MAINTAINERS — bump semver only
+ * replaces them with a Swiper carousel — entirely page‑cache‑safe.
+ * Version:      1.2.0
  * Author:       Your Name
  * License:      GPL‑2.0‑or‑later
  *
  * --------------------------------------------------------------------------
  * TABLE OF CONTENTS
  * --------------------------------------------------------------------------
- *  1. Constants
- *  2. Asset registration
- *  3. Render‑time filter
- *  4. Debug shortcode  [kacb debug="true"]
+ * 1. Constants
+ * 2. Asset registration
+ * 3. Render‑time filter
+ * 4. Debug shortcode  [kacb debug="true"]
  * ------------------------------------------------------------------------ */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ---------------------------------------------------------------------- *
  * 1. CONSTANTS
  * ---------------------------------------------------------------------- */
-const KACB_VER = '1.1.8';
+const KACB_VER = '1.2.0';
 define( 'KACB_URL',  plugin_dir_url( __FILE__ ) );
 define( 'KACB_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -98,10 +98,14 @@ add_filter( 'the_content', function ( $html ) {
                   position:absolute;top:0;left:50%;transform:translateX(-50%);background:#fff;color:#000;
                   padding:.25em 1em;font-size:12px;line-height:1.4;font-family:inherit;z-index:9;width:max-content;text-align:center;}
                 .kacb-caption{position:static;margin-top:.5em;color:#000;
-                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:right;padding-right:3%;}
+                  padding:.5em 0;font-size:14px;line-height:1.4;font-family:inherit;display:block;width:100%;text-align:center;padding-right:0%;}
                 .swiper-button-prev,
                 .swiper-button-next{
                   background:transparent;background-image:none;top:50%;transform:translateY(-50%);
+                }
+                .swiper-pagination{position:static;margin-top:1rem;}
+                @media (max-width: 767px) {
+                  .kacb-caption{text-align:center;padding-right:0;}
                 }
         CSS);
 
