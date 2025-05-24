@@ -4,7 +4,7 @@
  * Description:  Detects runs of 3–4 consecutive images at render‑time and
  * replaces them with a Swiper carousel — entirely page‑cache‑safe.
  * Version:      1.2.0
- * Author:       Your Name
+ * Author:       KISS Plugins
  * License:      GPL‑2.0‑or‑later
  *
  * --------------------------------------------------------------------------
