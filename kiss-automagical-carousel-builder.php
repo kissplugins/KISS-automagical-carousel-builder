@@ -64,8 +64,10 @@ add_filter( 'the_content', function ( $html ) {
 		      ? $img->parentNode
 		      : $img;
 
-		$nxt = $node->nextSibling;
-		while ( $is_ws( $nxt ) ) $nxt = $nxt?->nextSibling;
+                $nxt = $node->nextSibling;
+                while ( $is_ws( $nxt ) ) {
+                        $nxt = $nxt ? $nxt->nextSibling : null;
+                }
 
 		$is_next_img = $nxt instanceof DOMElement && (
 			$nxt->nodeName === 'img' ||
