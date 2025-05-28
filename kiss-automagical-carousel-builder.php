@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:  KISS Automagical Carousel Builder
- * Description:  Detects runs of 3–4 consecutive images at render‑time and
+ * Description:  Detects runs of 2–4 consecutive images at render‑time and
  *               replaces them with a Swiper carousel — entirely page‑cache‑safe.
- * Version:      1.2.0            ; NOTE FOR LLM MAINTAINERS — bump semver only
+ * Version:      1.2.1            ; NOTE FOR LLM MAINTAINERS — bump semver only
  * Author:       KISS Plugins
  * License:      GPL‑2.0‑or‑later
  *
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ---------------------------------------------------------------------- *
  * 1. CONSTANTS
  * ---------------------------------------------------------------------- */
-const KACB_VER = '1.2.0';
+const KACB_VER = '1.2.1';
 define( 'KACB_URL',  plugin_dir_url( __FILE__ ) );
 define( 'KACB_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -77,10 +77,10 @@ add_filter( 'the_content', function ( $html ) {
 
 		$buff[] = $img;
 
-		if ( ! $is_next_img ) {
-			if ( count( $buff ) >= 3 && count( $buff ) <= 4 ) $runs[] = $buff;
-			$buff = [];
-		}
+                if ( ! $is_next_img ) {
+                        if ( count( $buff ) >= 2 && count( $buff ) <= 4 ) $runs[] = $buff;
+                        $buff = [];
+                }
 	}
 
 	$GLOBALS['kacb_runs_found'] = count( $runs );
