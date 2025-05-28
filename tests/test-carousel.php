@@ -6,4 +6,10 @@ class CarouselBuilderTest extends WP_UnitTestCase {
         $this->assertStringNotContainsString( '<html', $output );
         $this->assertStringNotContainsString( '<body', $output );
     }
+
+    function test_two_images_create_carousel() {
+        $html  = '<img src="a.jpg" /><img src="b.jpg" />';
+        $output = apply_filters( 'the_content', $html );
+        $this->assertStringContainsString( 'kacb-carousel', $output );
+    }
 }

@@ -1,10 +1,10 @@
 # KISS Automagical Carousel Builder
 
-Detects runs of **3–4 adjacent images** in post content and converts them, at
+Detects runs of **2–4 adjacent images** in post content and converts them, at
 render‑time, into a Swiper carousel—fully compatible with page‑caching plugins.
 
 * **Plugin slug:** `kiss‑automagical‑carousel‑builder`
-* **Current version:** 1.1.8
+* **Current version:** 1.2.1
 * **License:** GPL v2 or later
 
 ---
@@ -24,7 +24,7 @@ render‑time, into a Swiper carousel—fully compatible with page‑caching plu
 ## How it works
 
 * On each front‑end request, the plugin looks for `<img>` tags that are
-  **immediately adjacent** (whitespace allowed) and groups of three or four.
+  **immediately adjacent** (whitespace allowed) and groups of two to four.
 * The group is replaced with Swiper markup:
   * **Top overlay** — *file name* (hidden by default)  
   * **Center badge** — `1 / 3`, `2 / 3`, … (hidden by default)  
@@ -38,7 +38,7 @@ render‑time, into a Swiper carousel—fully compatible with page‑caching plu
 
 ## Usage
 
-1. In Classic or Gutenberg, place **three or four images** of the same size so
+1. In Classic or Gutenberg, place **two, three or four images** of the same size so
    they abut each other.
 2. Publish/Update → view the front end.
 
@@ -81,7 +81,7 @@ Remove the shortcode when finished.
   .kacb-filename { display:block !important; }
   ```
 * **Change slide counter styling** — target `.kacb-indicator`.
-* **Adjust detection window** — edit `>= 3 && <= 4` in the filter if you’d
+* **Adjust detection window** — edit `>= 2 && <= 4` in the filter if you’d
   like larger carousels.
 
 ---
