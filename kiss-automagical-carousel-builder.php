@@ -3,7 +3,7 @@
  * Plugin Name:  KISS Automagical Carousel Builder
  * Description:  Detects runs of 2–4 consecutive images at render‑time and
  *               replaces them with a Swiper carousel — entirely page‑cache‑safe.
- * Version:      1.2.1            ; NOTE FOR LLM MAINTAINERS — bump semver only
+ * Version:      1.2.2            ; NOTE FOR LLM MAINTAINERS — bump semver only
  * Author:       KISS Plugins
  * License:      GPL‑2.0‑or‑later
  *
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ---------------------------------------------------------------------- *
  * 1. CONSTANTS
  * ---------------------------------------------------------------------- */
-const KACB_VER = '1.2.1';
+const KACB_VER = '1.2.2';
 define( 'KACB_URL',  plugin_dir_url( __FILE__ ) );
 define( 'KACB_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -116,13 +116,30 @@ add_filter( 'the_content', function ( $html ) {
         CSS);
 
 	/* build carousels */
-	foreach ( $runs as $run ) {
+        foreach ( $runs as $run ) {
 
-		$parent = $run[0]->parentNode;
-		$ref    = $run[0];
+                $parent = $run[0]->parentNode;
+                $ref    = $run[0];
 
-		$wrapper = $doc->createElement( 'div' );
-		$wrapper->setAttribute( 'class', 'kacb-carousel swiper' );
+                $first  = ( $ref->parentNode->nodeName === 'p' && $ref->parentNode->childNodes->length === 1 )
+                        ? $ref->parentNode
+                        : $ref;
+                $prev   = $first->previousSibling;
+                while ( $is_ws( $prev ) ) {
+                        $prev = $prev ? $prev->previousSibling : null;
+                }
+                $width  = '';
+                if ( $prev && $prev->nodeType === XML_COMMENT_NODE &&
+                     preg_match( '/^kacb\s+width="?([^"]+)"?/i', trim( $prev->nodeValue ), $m ) ) {
+                        $width = $m[1];
+                        $prev->parentNode->removeChild( $prev );
+                }
+
+                $wrapper = $doc->createElement( 'div' );
+                $wrapper->setAttribute( 'class', 'kacb-carousel swiper' );
+                if ( $width !== '' ) {
+                        $wrapper->setAttribute( 'style', 'width:' . esc_attr( $width ) . ';max-width:' . esc_attr( $width ) . ';' );
+                }
 
 		$inner = $doc->createElement( 'div' );
 		$inner->setAttribute( 'class', 'swiper-wrapper' );
@@ -178,11 +195,17 @@ add_filter( 'the_content', function ( $html ) {
  * ---------------------------------------------------------------------- */
 add_shortcode( 'kacb', function ( $atts ) {
 
-	$atts = shortcode_atts( [ 'debug' => 'false' ], $atts );
-	if ( strtolower( $atts['debug'] ) !== 'true' ) return '';
+        $atts = shortcode_atts( [ 'debug' => 'false', 'width' => '' ], $atts );
 
-	/* defer actual printing to wp_footer so filter has finished */
-	add_action( 'wp_footer', function () {
+        $marker = '';
+        if ( trim( $atts['width'] ) !== '' ) {
+                $marker = sprintf( '<!--kacb width="%s"-->', esc_attr( $atts['width'] ) );
+        }
+
+        if ( strtolower( $atts['debug'] ) !== 'true' ) return $marker;
+
+        /* defer actual printing to wp_footer so filter has finished */
+        add_action( 'wp_footer', function () {
 
 		$out  = sprintf( "KACB v%s\n---------------------------------\n", KACB_VER );
 		$out .= sprintf( "Filter executed:         %s\n", ! empty( $GLOBALS['kacb_filter_ran'] ) ? 'YES' : 'NO' );
@@ -208,5 +231,5 @@ add_shortcode( 'kacb', function ( $atts ) {
 		echo '<div class="kacb-debug"><pre>' . esc_html( $out ) . '</pre></div>';
 	}, 9999 );
 
-	return '';  // shortcode outputs nothing immediately
+        return $marker;  // shortcode outputs only the width marker
 } );

@@ -4,7 +4,7 @@ Detects runs of **2–4 adjacent images** in post content and converts them, at
 render‑time, into a Swiper carousel—fully compatible with page‑caching plugins.
 
 * **Plugin slug:** `kiss‑automagical‑carousel‑builder`
-* **Current version:** 1.2.1
+* **Current version:** 1.2.2
 * **License:** GPL v2 or later
 
 ---
@@ -40,7 +40,9 @@ render‑time, into a Swiper carousel—fully compatible with page‑caching plu
 
 1. In Classic or Gutenberg, place **two, three or four images** of the same size so
    they abut each other.
-2. Publish/Update → view the front end.
+2. Optionally insert `[kacb width="75%"]` directly before the images to set a
+   custom carousel width.
+3. Publish/Update → view the front end.
 
 ### Optional debug panel
 
@@ -64,6 +66,7 @@ Remove the shortcode when finished.
 
 | Version | Notes |
 |---------|-------|
+| **1.2.2** | Carousel width can be customised with `[kacb width="50%"]`. |
 | **1.1.8** | Navigation arrows use transparent backgrounds. Captions now appear below images and left aligned; slides center images and inherit the body font. |
 | **1.1.6** | *Captions* now fall back to `post_excerpt` or attachment **title**; overlay is omitted when caption empty.<br>*Filename* & *center badge* are hidden by default and auto‑re‑enabled only in `debug="true"` mode.<br>Debug panel accuracy improved by deferring its render to `wp_footer`. |
 | **1.1.5** | Added debug‑mode badge toggle, caption fallback to `post_excerpt`, badge hidden outside debug. |
