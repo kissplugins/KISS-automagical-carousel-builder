@@ -4,7 +4,7 @@ Detects runs of **2–4 adjacent images** in post content and converts them, at
 render‑time, into a Swiper carousel—fully compatible with page‑caching plugins.
 
 * **Plugin slug:** `kiss‑automagical‑carousel‑builder`
-* **Current version:** 1.2.1
+* **Current version:** 1.2.3
 * **License:** GPL v2 or later
 
 ---
@@ -40,7 +40,12 @@ render‑time, into a Swiper carousel—fully compatible with page‑caching plu
 
 1. In Classic or Gutenberg, place **two, three or four images** of the same size so
    they abut each other.
-2. Publish/Update → view the front end.
+2. Optionally insert `[kacb width="75%" style="float:right;margin-left:1em"]`
+   directly before the images to set the carousel width and add inline CSS.
+3. Publish/Update → view the front end.
+
+Passing a `style` attribute lets you apply CSS rules to a single carousel—for
+example, floating it left or right—without editing your theme.
 
 ### Optional debug panel
 
@@ -64,6 +69,8 @@ Remove the shortcode when finished.
 
 | Version | Notes |
 |---------|-------|
+| **1.2.3** | Inline styles per post via `[kacb style="float:right"]` and width together. |
+| **1.2.2** | Carousel width can be customised with `[kacb width="50%"]`. |
 | **1.1.8** | Navigation arrows use transparent backgrounds. Captions now appear below images and left aligned; slides center images and inherit the body font. |
 | **1.1.6** | *Captions* now fall back to `post_excerpt` or attachment **title**; overlay is omitted when caption empty.<br>*Filename* & *center badge* are hidden by default and auto‑re‑enabled only in `debug="true"` mode.<br>Debug panel accuracy improved by deferring its render to `wp_footer`. |
 | **1.1.5** | Added debug‑mode badge toggle, caption fallback to `post_excerpt`, badge hidden outside debug. |
@@ -81,6 +88,8 @@ Remove the shortcode when finished.
   .kacb-filename { display:block !important; }
   ```
 * **Change slide counter styling** — target `.kacb-indicator`.
+* **Inline CSS per post** — use `[kacb style="float:left"]` to apply styles
+  directly to a single carousel.
 * **Adjust detection window** — edit `>= 2 && <= 4` in the filter if you’d
   like larger carousels.
 
