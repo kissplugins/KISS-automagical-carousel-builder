@@ -3,7 +3,7 @@
  * Plugin Name:  KISS Automagical Carousel Builder
  * Description:  Detects runs of 2–4 consecutive images at render‑time and
  *               replaces them with a Swiper carousel — entirely page‑cache‑safe.
- * Version:      1.2.2            ; NOTE FOR LLM MAINTAINERS — bump semver only
+ * Version:      1.2.3            ; NOTE FOR LLM MAINTAINERS — bump semver only
  * Author:       KISS Plugins
  * License:      GPL‑2.0‑or‑later
  *
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ---------------------------------------------------------------------- *
  * 1. CONSTANTS
  * ---------------------------------------------------------------------- */
-const KACB_VER = '1.2.2';
+const KACB_VER = '1.2.3';
 define( 'KACB_URL',  plugin_dir_url( __FILE__ ) );
 define( 'KACB_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -128,17 +128,31 @@ add_filter( 'the_content', function ( $html ) {
                 while ( $is_ws( $prev ) ) {
                         $prev = $prev ? $prev->previousSibling : null;
                 }
-                $width  = '';
+                $width = '';
+                $custom_style = '';
                 if ( $prev && $prev->nodeType === XML_COMMENT_NODE &&
-                     preg_match( '/^kacb\s+width="?([^"]+)"?/i', trim( $prev->nodeValue ), $m ) ) {
-                        $width = $m[1];
+                     stripos( trim( $prev->nodeValue ), 'kacb' ) === 0 ) {
+                        $comment = trim( $prev->nodeValue );
+                        if ( preg_match( '/width="([^"]+)"/i', $comment, $m ) ) {
+                                $width = $m[1];
+                        }
+                        if ( preg_match( '/style="([^"]+)"/i', $comment, $m ) ) {
+                                $custom_style = $m[1];
+                        }
                         $prev->parentNode->removeChild( $prev );
                 }
 
                 $wrapper = $doc->createElement( 'div' );
                 $wrapper->setAttribute( 'class', 'kacb-carousel swiper' );
+                $style_attr = '';
                 if ( $width !== '' ) {
-                        $wrapper->setAttribute( 'style', 'width:' . esc_attr( $width ) . ';max-width:' . esc_attr( $width ) . ';' );
+                        $style_attr .= 'width:' . esc_attr( $width ) . ';max-width:' . esc_attr( $width ) . ';';
+                }
+                if ( $custom_style !== '' ) {
+                        $style_attr .= $custom_style;
+                }
+                if ( $style_attr !== '' ) {
+                        $wrapper->setAttribute( 'style', $style_attr );
                 }
 
 		$inner = $doc->createElement( 'div' );
@@ -195,11 +209,18 @@ add_filter( 'the_content', function ( $html ) {
  * ---------------------------------------------------------------------- */
 add_shortcode( 'kacb', function ( $atts ) {
 
-        $atts = shortcode_atts( [ 'debug' => 'false', 'width' => '' ], $atts );
+        $atts = shortcode_atts( [ 'debug' => 'false', 'width' => '', 'style' => '' ], $atts );
 
         $marker = '';
-        if ( trim( $atts['width'] ) !== '' ) {
-                $marker = sprintf( '<!--kacb width="%s"-->', esc_attr( $atts['width'] ) );
+        if ( trim( $atts['width'] ) !== '' || trim( $atts['style'] ) !== '' ) {
+                $parts = [];
+                if ( trim( $atts['width'] ) !== '' ) {
+                        $parts[] = sprintf( 'width="%s"', esc_attr( $atts['width'] ) );
+                }
+                if ( trim( $atts['style'] ) !== '' ) {
+                        $parts[] = sprintf( 'style="%s"', esc_attr( $atts['style'] ) );
+                }
+                $marker = '<!--kacb ' . implode( ' ', $parts ) . '-->';
         }
 
         if ( strtolower( $atts['debug'] ) !== 'true' ) return $marker;
